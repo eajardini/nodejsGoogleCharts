@@ -1,2 +1,2 @@
-# Exemplo de MVC em NODEJS
-## Usando postgres
+# Exemplo de Google Charts em NODEJS
+## Usando Postgres com SGBD.
