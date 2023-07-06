@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <title>Relatórios de Notas e Faltas</title>
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
+    </script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            packages: ['corechart', 'bar']
+        });
+    </script>
+</head>
+
+<script language="JavaScript">
+    function drawChart() {
+        // Define the chart to be drawn.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Aluno');
+        data.addColumn('number', 'Nota');
+
+        data.addRows([
+        <% for (var i = 0; i < diarios.length; i++) { %>
+            ["<%= diarios[i].nomealuno %>", <%= diarios[i].nota %>],
+        <% } %>
+      ]);
+
+        //@ Início: Gráfico de Pizza
+        // Set chart options
+        var options = {
+            'title': 'Notas dos alunos',
+            chartArea: { width: '90%' },
+            
+        };
+
+        // Instantiate and draw the chart.
+        var chart = new google.visualization.PieChart(document.getElementById('container'));
+        chart.draw(data, options);
+        //@ Fim: Gráfico de Pizza
+
+        //@ Início: Gráfico de Barras
+        var options = {
+            title: 'Notas e Faltas dos alunos',
+            chartArea: { width: '80%' },
+            hAxis: {
+                title: 'Notas',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Aluno'
+            }
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('bar_div'));
+
+        chart.draw(data, options);
+        //@ Fim: Gráfico de Barras
+
+    }
+
+    google.charts.setOnLoadCallback(drawChart);
+
+</script>
+
+
+<body>
+
+    <div class="row justify-content-center align-items-center g-2">
+        <table class="columns">
+            <tr>
+                <td>
+                    <div id="container" style="width: 550px; height: 600px; margin: 10 auto; border: 1px solid #ccc">
+                    </div>
+                </td>
+                <td>
+                    <div id="bar_div" class="pl-0"
+                        style="width: 650px; height: 600px; margin: 0 auto; border: 1px solid #ccc"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+</body>
+
+</html>

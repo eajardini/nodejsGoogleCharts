@@ -12,6 +12,7 @@
 
 
 const express = require('express')
+const ctlDiarios = require("./controllers/ctldiarios")
 
 
 const app = express()
@@ -35,6 +36,8 @@ app.get('/', (req, res) => (async() => {
   //console.log("quantidade de rows:", user.length);  
   res.render('pages/charts', { "user": user })
 })());
+
+app.get('/diarios', ctlDiarios.getAllDiarios);
 
 
 app.listen(port, () => {
